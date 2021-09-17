@@ -3,7 +3,6 @@ import 'package:flashcard/home.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'splash.dart';
 import 'home.dart';
 
 void main() {
