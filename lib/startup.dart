@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
-// class Font extends StatelessWidget {
-//   const Font({ Key? key }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       theme: ThemeData(fontFamily: 'Nunito')
-//     );
-//   }
-// }
+import 'package:flashcard/home.dart';
 
 class StartupPage extends StatefulWidget {
   const StartupPage({Key? key, required String title}) : super(key: key);
@@ -34,12 +26,12 @@ class _StartupPageState extends State<StartupPage> {
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.only(
-                        top: 70,
+                        top: 100,
                       ),
                       child: Text(
                         'Learn Free',
                         style: TextStyle(
-                          color: Color(0xFFB06bfad),
+                          color: Color(0xFFB40284A),
                           fontSize: 28,
                         ),
                       ),
@@ -51,7 +43,7 @@ class _StartupPageState extends State<StartupPage> {
                         'We make reviewing easier. Join now and start your academic journey with us',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Color(0xFFB06bfad),
+                          color: Color(0xFFB40284A),
                           fontSize: 16,
                         ),
                       ),
@@ -62,19 +54,28 @@ class _StartupPageState extends State<StartupPage> {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 32),
                 margin: EdgeInsets.only(
-                  bottom: 20,
+                  bottom: 50,
                 ),
                 child: Center(
                   child: Image.asset('assets/images/startup.png'),
                 ),
               ),
-              Container(
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.fade,
+                      child: MyHomePage(title: 'Home'),
+                    ),
+                  );
+                },
                 child: Container(
                   margin: EdgeInsets.all(32),
                   padding: EdgeInsets.all(20),
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Color(0xFFB06bfad),
+                    color: Color(0xFFB40284A),
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: Center(
