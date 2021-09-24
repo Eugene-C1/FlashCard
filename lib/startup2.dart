@@ -1,7 +1,7 @@
-import 'package:flashcard/home.dart';
-import 'package:flashcard/startup3.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+
+import 'startup3.dart';
 
 class StartupPage2 extends StatefulWidget {
   const StartupPage2({Key? key}) : super(key: key);
