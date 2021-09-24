@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:flashcard/home.dart';
+import 'startup2.dart';
 
 class StartupPage extends StatefulWidget {
   const StartupPage({Key? key, required String title}) : super(key: key);
@@ -16,7 +17,7 @@ class _StartupPageState extends State<StartupPage> {
     return Material(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        //backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,7 +32,7 @@ class _StartupPageState extends State<StartupPage> {
                       child: Text(
                         'Learn Free',
                         style: TextStyle(
-                          color: Color(0xFFB40284A),
+                          color: Color(0xFFB76A185),
                           fontSize: 28,
                         ),
                       ),
@@ -43,7 +44,7 @@ class _StartupPageState extends State<StartupPage> {
                         'We make reviewing easier. Join now and start your academic journey with us',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Color(0xFFB40284A),
+                          color: Color(0xFFB76A185),
                           fontSize: 16,
                         ),
                       ),
@@ -52,12 +53,14 @@ class _StartupPageState extends State<StartupPage> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 32),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 32,
+                ),
                 margin: EdgeInsets.only(
-                  bottom: 50,
+                  bottom: 90,
                 ),
                 child: Center(
-                  child: Image.asset('assets/images/startup.png'),
+                  child: Image.asset('assets/images/startup1.png'),
                 ),
               ),
               GestureDetector(
@@ -65,8 +68,8 @@ class _StartupPageState extends State<StartupPage> {
                   Navigator.push(
                     context,
                     PageTransition(
-                      type: PageTransitionType.fade,
-                      child: MyHomePage(title: 'Home'),
+                      type: PageTransitionType.rightToLeft,
+                      child: StartupPage2(),
                     ),
                   );
                 },
@@ -75,7 +78,7 @@ class _StartupPageState extends State<StartupPage> {
                   padding: EdgeInsets.all(20),
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Color(0xFFB40284A),
+                    color: Color(0xFFB76A185),
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: Center(

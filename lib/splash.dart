@@ -1,6 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flashcard/home.dart';
-import 'package:flashcard/startup.dart';
+import 'package:flashcard/startup1.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:after_layout/after_layout.dart';
@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dart:async';
 
-import 'startup.dart';
+import 'startup1.dart';
 
 class Splash extends StatelessWidget {
   const Splash({Key? key}) : super(key: key);
@@ -43,7 +43,8 @@ class _CheckState extends State<Check> with AfterLayoutMixin<Check> {
     if (_seen) {
       Navigator.of(context).pushReplacement(
         new MaterialPageRoute(
-          builder: (context) => new MyHomePage(title: 'Home'),
+          builder: (context) => new StartupPage(title: 'Home'),
+          // NOTE: Changeback to HomePage!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         ),
       );
     } else {
