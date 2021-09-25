@@ -34,48 +34,64 @@ class _StartupPage3State extends State<StartupPage3> {
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.rightToLeft,
-                      child: StartupPage4(),
+              Container(
+                margin: EdgeInsets.only(
+                  top: 45,
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    Image(
+                      image: AssetImage('assets/images/boy.png'),
                     ),
-                  );
-                },
-                child: Container(
-                  margin: EdgeInsets.only(
-                    top: 45,
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 32,
-                  ),
-                  child: Center(
-                    child: Image.asset('assets/images/boy.png'),
-                  ),
+                    Positioned.fill(
+                      child: Material(
+                        color: Colors.transparent,
+                        shape: CircleBorder(),
+                        clipBehavior: Clip.hardEdge,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                child: StartupPage4(),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.rightToLeft,
-                      child: StartupPage4(),
+              Container(
+                margin: EdgeInsets.only(
+                  top: 35,
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    Image(
+                      image: AssetImage('assets/images/girl.png'),
                     ),
-                  );
-                },
-                child: Container(
-                  margin: EdgeInsets.only(
-                    top: 45,
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 32,
-                  ),
-                  child: Center(
-                    child: Image.asset('assets/images/girl.png'),
-                  ),
+                    Positioned.fill(
+                      child: Material(
+                        color: Colors.transparent,
+                        shape: CircleBorder(),
+                        clipBehavior: Clip.hardEdge,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                child: StartupPage4(),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

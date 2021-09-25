@@ -56,36 +56,36 @@ class _StartupPageState extends State<StartupPage> {
                   horizontal: 32,
                 ),
                 margin: EdgeInsets.only(
-                  bottom: 90,
+                  bottom: 122,
                 ),
                 child: Center(
                   child: Image.asset('assets/images/startup1.png'),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.rightToLeft,
-                      child: StartupPage2(),
-                    ),
-                  );
-                },
-                child: Container(
-                  margin: EdgeInsets.all(32),
-                  padding: EdgeInsets.all(20),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFB76A185),
+              Container(
+                height: 73,
+                width: 336,
+                child: Material(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Color(0xFFB76A185),
+                  child: InkWell(
                     borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Get Started',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.fade,
+                          child: StartupPage2(),
+                        ),
+                      );
+                    },
+                    child: Center(
+                      child: Text(
+                        'Get Started',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),

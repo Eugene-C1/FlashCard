@@ -76,41 +76,39 @@ class _StartupPage2State extends State<StartupPage2> {
                   ],
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  setState(
-                    () {
-                      _text.text.isEmpty ? _validate = true : _validate = false;
-                      if (!_validate) {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.rightToLeft,
-                            child: StartupPage3(),
-                          ),
-                        );
-                      }
-                    },
-                  );
-                },
-                child: Container(
-                  margin: EdgeInsets.only(
-                    right: 32,
-                    left: 32,
-                    bottom: 32,
-                  ),
-                  padding: EdgeInsets.all(20),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFB76A185),
+              Container(
+                height: 73,
+                width: 336,
+                child: Material(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Color(0xFFB76A185),
+                  child: InkWell(
                     borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Next',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
+                    onTap: () {
+                      setState(
+                        () {
+                          _text.text.isEmpty
+                              ? _validate = true
+                              : _validate = false;
+                          if (!_validate) {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                child: StartupPage3(),
+                              ),
+                            );
+                          }
+                        },
+                      );
+                    },
+                    child: Center(
+                      child: Text(
+                        'Next',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),

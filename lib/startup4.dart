@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-import 'home.dart';
+import 'main.dart';
 
 class StartupPage4 extends StatefulWidget {
   const StartupPage4({Key? key}) : super(key: key);
@@ -47,6 +47,7 @@ class _StartupPage4State extends State<StartupPage4> {
               Container(
                 margin: EdgeInsets.only(
                   top: 45,
+                  bottom: 116,
                 ),
                 padding: EdgeInsets.symmetric(
                   horizontal: 64,
@@ -60,35 +61,30 @@ class _StartupPage4State extends State<StartupPage4> {
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.rightToLeft,
-                      child: MyHomePage(title: 'Home'),
-                    ),
-                  );
-                },
-                child: Container(
-                  margin: EdgeInsets.only(
-                    right: 32,
-                    left: 32,
-                    bottom: 32,
-                    top: 102,
-                  ),
-                  padding: EdgeInsets.all(20),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFB76A185),
+              Container(
+                height: 73,
+                width: 336,
+                child: Material(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Color(0xFFB76A185),
+                  child: InkWell(
                     borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Finish',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageTransition(
+                          type: PageTransitionType.fade,
+                          child: MyHomePage(),
+                        ),
+                      );
+                    },
+                    child: Center(
+                      child: Text(
+                        'Finish',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
