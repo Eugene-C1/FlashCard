@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
+import 'sharedpreferences.dart';
 import 'startup3.dart';
 
 class StartupPage2 extends StatefulWidget {
@@ -84,7 +87,9 @@ class _StartupPage2State extends State<StartupPage2> {
                   color: Color(0xFFB76A185),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(50),
-                    onTap: () {
+                    onTap: () async {
+                      MySharedPreferences.instance
+                          .setStringValue('name', _text.text);
                       setState(
                         () {
                           _text.text.isEmpty

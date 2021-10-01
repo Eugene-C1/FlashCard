@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'main.dart';
+import 'sharedpreferences.dart';
 
 class StartupPage4 extends StatefulWidget {
   const StartupPage4({Key? key}) : super(key: key);
@@ -70,7 +71,9 @@ class _StartupPage4State extends State<StartupPage4> {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(50),
                     onTap: () {
-                      Navigator.push(
+                      MySharedPreferences.instance
+                          .setBooeleanValue('seen', true);
+                      Navigator.pushReplacement(
                         context,
                         PageTransition(
                           type: PageTransitionType.fade,

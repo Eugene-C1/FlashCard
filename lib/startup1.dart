@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-
 import 'startup2.dart';
 
 class StartupPage extends StatefulWidget {

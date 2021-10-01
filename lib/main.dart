@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
+import 'listpage.dart';
+import 'profile.dart';
 import 'splash.dart';
 
 void main() {
@@ -27,11 +29,25 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  DateTime pre_backpress = DateTime.now();
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
+    return Scaffold(
+      body: WillPopScope(
         onWillPop: () async {
-          return false;
+          final timegap = DateTime.now().difference(pre_backpress);
+          final cantExit = timegap >= Duration(seconds: 2);
+          pre_backpress = DateTime.now();
+          if (cantExit) {
+            final snack = SnackBar(
+              content: Text('Press Back button again to Exit'),
+              duration: Duration(seconds: 2),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snack);
+            return false;
+          } else {
+            return true;
+          }
         },
         child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -83,7 +99,13 @@ class _MyHomePageState extends State<MyHomePage> {
                           borderRadius: BorderRadius.circular(32),
                           clipBehavior: Clip.hardEdge,
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => ID(),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ),
@@ -91,45 +113,96 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(
-                        left: 5,
-                        top: 30,
-                      ),
-                      height: 175,
-                      width: 175,
-                      child: Material(
-                        borderRadius: BorderRadius.circular(32),
-                        clipBehavior: Clip.hardEdge,
-                        color: Color(0xFFB76A185),
-                        child: InkWell(
-                          onTap: () {},
-                        ),
+                      margin: EdgeInsets.only(top: 30),
+                      child: Stack(
+                        children: <Widget>[
+                          Image(
+                            image: AssetImage('assets/images/flashcard.png'),
+                          ),
+                          Positioned.fill(
+                            child: Material(
+                              borderRadius: BorderRadius.circular(32),
+                              color: Colors.transparent,
+                              clipBehavior: Clip.hardEdge,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      type: PageTransitionType.rightToLeft,
+                                      child: ListPage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(
-                        left: 20,
-                        top: 30,
-                      ),
-                      height: 175,
-                      width: 175,
-                      child: Material(
-                        borderRadius: BorderRadius.circular(32),
-                        clipBehavior: Clip.hardEdge,
-                        color: Color(0xFFBB35136),
-                        child: InkWell(
-                          onTap: () {},
-                        ),
+                      margin: EdgeInsets.only(top: 30),
+                      child: Stack(
+                        children: <Widget>[
+                          Image(
+                            image: AssetImage('assets/images/quiz.png'),
+                          ),
+                          Positioned.fill(
+                            child: Material(
+                              borderRadius: BorderRadius.circular(32),
+                              color: Colors.transparent,
+                              clipBehavior: Clip.hardEdge,
+                              child: InkWell(
+                                onTap: () {},
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
+
+                    // Container(
+                    //   margin: EdgeInsets.only(
+                    //     left: 5,
+                    //     top: 30,
+                    //   ),
+                    //   height: 175,
+                    //   width: 175,
+                    //   child: Material(
+                    //     borderRadius: BorderRadius.circular(32),
+                    //     clipBehavior: Clip.hardEdge,
+                    //     color: Color(0xFFB76A185),
+                    //     child: InkWell(
+                    //       onTap: () {},
+                    //     ),
+                    //   ),
+                    // ),
+                    // Container(
+                    //   margin: EdgeInsets.only(
+                    //     left: 20,
+                    //     top: 30,
+                    //   ),
+                    //   height: 175,
+                    //   width: 175,
+                    //   child: Material(
+                    //     borderRadius: BorderRadius.circular(32),
+                    //     clipBehavior: Clip.hardEdge,
+                    //     color: Color(0xFFBB35136),
+                    //     child: InkWell(
+                    //       onTap: () {},
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 )
               ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

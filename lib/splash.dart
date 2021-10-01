@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dart:async';
 
+import 'main.dart';
 import 'startup1.dart';
 
 class Splash extends StatelessWidget {
@@ -41,12 +42,12 @@ class _CheckState extends State<Check> with AfterLayoutMixin<Check> {
     if (_seen) {
       Navigator.of(context).pushReplacement(
         new MaterialPageRoute(
-          builder: (context) => new StartupPage(title: 'Home'),
+          builder: (context) => new StartupPage(title: 'Start Up'),
           // NOTE: Changeback to HomePage!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         ),
       );
     } else {
-      await prefs.setBool('seen', true);
+      //await prefs.setBool('seen', true);
       Navigator.of(context).pushReplacement(
         new MaterialPageRoute(
           builder: (context) => StartupPage(title: 'Start Up'),

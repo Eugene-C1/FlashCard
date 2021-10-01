@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
+import 'sharedpreferences.dart';
 import 'startup4.dart';
 
 class StartupPage3 extends StatefulWidget {
@@ -50,6 +51,8 @@ class _StartupPage3State extends State<StartupPage3> {
                         clipBehavior: Clip.hardEdge,
                         child: InkWell(
                           onTap: () {
+                            MySharedPreferences.instance
+                                .setStringValue('gender', 'Male');
                             Navigator.push(
                               context,
                               PageTransition(
@@ -80,6 +83,8 @@ class _StartupPage3State extends State<StartupPage3> {
                         clipBehavior: Clip.hardEdge,
                         child: InkWell(
                           onTap: () {
+                            MySharedPreferences.instance
+                                .setStringValue('gender', 'Female');
                             Navigator.push(
                               context,
                               PageTransition(
