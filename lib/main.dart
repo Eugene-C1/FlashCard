@@ -16,6 +16,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(fontFamily: "Nunito"),
+      routes: <String, WidgetBuilder>{
+        '/home': (BuildContext context) => MyHomePage()
+      },
       home: Splash(),
     );
   }

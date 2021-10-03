@@ -1,4 +1,4 @@
-// main.dart
+import 'package:flashcard/main.dart';
 import 'package:flutter/material.dart';
 
 import 'sharedpreferences.dart';
@@ -40,8 +40,8 @@ class _ListPageState extends State<ListPage> {
             }));
   }
 
-  TextEditingController _questionController = new TextEditingController();
-  TextEditingController _answerController = new TextEditingController();
+  TextEditingController _questionController = TextEditingController();
+  TextEditingController _answerController = TextEditingController();
 
   // This function will be triggered when the floating button is pressed
   // It will also be triggered when you want to update an item
@@ -158,28 +158,40 @@ class _ListPageState extends State<ListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xFFB76A185),
-          title: Text('Kindacode.com'),
-        ),
-        body: _isLoading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : ListView.builder(
-                itemCount: _journals.length,
-                itemBuilder: (context, index) => Card(
-                  color: Colors.green[200],
-                  margin: EdgeInsets.all(15),
-                  child: ListTile(
-                    title: Text(_journals[index]['question']),
-                    subtitle: Text(_journals[index]['answer']),
-                    trailing: SizedBox(
-                      width: 100,
-                      child: Row(
-                        children: [
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushNamed(context, '/home');
+        return false;
+      },
+      child: MaterialApp(
+        home: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                iconSize: 25.0,
+                onPressed: () {
+                  Navigator.pushNamed(context, '/home');
+                }),
+            backgroundColor: Color(0xFFB76A185),
+            title: Text('Flashcard'),
+            centerTitle: true,
+            elevation: 0.0,
+          ),
+          body: _isLoading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ListView.builder(
+                  itemCount: _journals.length,
+                  itemBuilder: (context, index) => Card(
+                    color: Colors.green[200],
+                    margin: EdgeInsets.all(15),
+                    child: ListTile(
+                      title: Text(_journals[index]['question']),
+                      subtitle: Text(_journals[index]['answer']),
+                      trailing: SizedBox(
+                        width: 100,
+                        child: Row(children: [
                           IconButton(
                             icon: Icon(Icons.edit),
                             onPressed: () => _showForm(_journals[index]['id']),
@@ -189,41 +201,38 @@ class _ListPageState extends State<ListPage> {
                             onPressed: () =>
                                 _deleteItem(_journals[index]['id']),
                           ),
-                        ],
+                        ]),
                       ),
                     ),
                   ),
                 ),
+          floatingActionButton: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton(
+                backgroundColor: Color(0xFFB76A185),
+                heroTag: 'Add Button',
+                child: Icon(Icons.add),
+                onPressed: () => _showForm(null),
               ),
-        floatingActionButton: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            FloatingActionButton(
-              backgroundColor: Color(0xFFB76A185),
-              heroTag: 'Add Button',
-              child: Icon(Icons.add),
-              onPressed: () => _showForm(null),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            FloatingActionButton(
-              backgroundColor: Color(0xFFB76A185),
-              heroTag: 'Next Page Button',
-              child: Icon(Icons.check),
-              onPressed: () {
-                if (_journals.length != 0) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          new FlashCardPage(title: 'Flashcard'),
-                    ),
-                  );
-                }
-              },
-            ),
-          ],
+              SizedBox(
+                height: 10,
+              ),
+              FloatingActionButton(
+                backgroundColor: Color(0xFFB76A185),
+                heroTag: 'Next Page Button',
+                child: Icon(Icons.check),
+                onPressed: () {
+                  if (_journals.isNotEmpty) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => new FlashCardPage()));
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

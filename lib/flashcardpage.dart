@@ -8,7 +8,7 @@ import 'sql_helper.dart';
 import 'quizpage.dart';
 
 class FlashCardPage extends StatefulWidget {
-  const FlashCardPage({Key? key, required String title}) : super(key: key);
+  const FlashCardPage({Key? key}) : super(key: key);
 
   @override
   _FlashCardPageState createState() => _FlashCardPageState();
@@ -41,44 +41,71 @@ class _FlashCardPageState extends State<FlashCardPage> {
   Widget build(BuildContext context) {
     int? count = _journals.length;
     int currentNumber = _currentIndex + 1;
-    return Material(
-      child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('$currentNumber / $count'),
-              SizedBox(
-                width: 250,
-                height: 250,
-                child: FlipCard(
-                  front: FlashcardView(
-                    text: _journals[_currentIndex]['question'],
-                  ),
-                  back: FlashcardView(
-                    text: _journals[_currentIndex]['answer'],
-                  ),
+    return MaterialApp(
+      theme: ThemeData(primarySwatch: Colors.green),
+      home: Scaffold(
+        body: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '$currentNumber / $count',
+                      style: TextStyle(
+                        color: Color(0xFFB76A185),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 250,
+                      height: 250,
+                      child: FlipCard(
+                        front: FlashcardView(
+                          text: _journals[_currentIndex]['question'],
+                        ),
+                        back: FlashcardView(
+                          text: _journals[_currentIndex]['answer'],
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        OutlinedButton.icon(
+                            onPressed: showPreviousCard,
+                            icon: Icon(
+                              Icons.chevron_left,
+                              color: Color(0xFFB76A185),
+                            ),
+                            label: Text(
+                              'Prev',
+                              style: TextStyle(
+                                color: Color(0xFFB76A185),
+                              ),
+                            )),
+                        OutlinedButton.icon(
+                            onPressed: showNextCard,
+                            icon: Icon(
+                              Icons.chevron_right,
+                              color: Color(0xFFB76A185),
+                            ),
+                            label: Text(
+                              'Next',
+                              style: TextStyle(
+                                color: Color(0xFFB76A185),
+                              ),
+                            )),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  OutlinedButton.icon(
-                      onPressed: showPreviousCard,
-                      icon: Icon(Icons.chevron_left),
-                      label: Text('Prev')),
-                  OutlinedButton.icon(
-                      onPressed: showNextCard,
-                      icon: Icon(Icons.chevron_right),
-                      label: Text('Next')),
-                ],
-              ),
-            ],
-          ),
-        ),
         floatingActionButton: FloatingActionButton(
           heroTag: 'Next Page Button',
           child: Icon(Icons.check),
+          backgroundColor: Color(0xFFB76A185),
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(

@@ -62,12 +62,58 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
   }
 
   late AnimationController _controller;
-  int levelClock = 10;
+  int levelClock = 600;
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Continue"),
+      onPressed: () {
+        controller = _answerController.text.toString();
+        check = _journals[_currentIndex]['answer'] == controller;
+
+        if (check) {
+          score++;
+          MySharedPreferences.instance.setIntegerValue('score', score);
+          MySharedPreferences.instance.setIntegerValue('counter', score);
+        }
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const ResultPage(),
+          ),
+        );
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Alert"),
+      content: Text("Would you like to submit your answer?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   TextEditingController _answerController = new TextEditingController();
@@ -79,110 +125,109 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
     int currentNumber = _currentIndex + 1;
     return Material(
       child: Scaffold(
-        body: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Row(
-                  //mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text('$currentNumber / $count'),
-                    Countdown(
-                      animation: StepTween(
-                        begin: levelClock, // THIS IS A USER ENTERED NUMBER
-                        end: 0,
-                      ).animate(_controller),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  width: 250,
-                  height: 250,
-                  child: FlipCard(
-                    front: FlashcardView(
-                      text: _journals[_currentIndex]['question'],
-                    ),
-                    back: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(4.0),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 2,
-                            offset:
-                                Offset(0.0, 2), // changes position of shadow
+        body: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        //mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            '$currentNumber / $count',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                          Countdown(
+                            animation: StepTween(
+                              begin:
+                                  levelClock, // THIS IS A USER ENTERED NUMBER
+                              end: 0,
+                            ).animate(_controller),
                           ),
                         ],
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 30),
-                            child: TextField(
-                              controller: _answerController,
-                              decoration: InputDecoration(
-                                hintText: 'Enter Answer',
-                                labelStyle: TextStyle(color: Colors.white),
-                                border: OutlineInputBorder(),
+                      SizedBox(
+                        width: 250,
+                        height: 250,
+                        child: FlipCard(
+                          front: FlashcardView(
+                            text: _journals[_currentIndex]['question'],
+                          ),
+                          back: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(4.0),
                               ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 1,
+                                  blurRadius: 2,
+                                  offset: Offset(
+                                      0.0, 2), // changes position of shadow
+                                ),
+                              ],
                             ),
-                          )
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 30),
+                                  child: TextField(
+                                    controller: _answerController,
+                                    decoration: InputDecoration(
+                                      hintText: 'Enter Answer',
+                                      labelStyle:
+                                          TextStyle(color: Colors.white),
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          OutlinedButton.icon(
+                            onPressed: showPreviousCard,
+                            icon: Icon(Icons.chevron_left),
+                            label: Text('Prev'),
+                          ),
+                          OutlinedButton.icon(
+                            onPressed: showNextCard,
+                            icon: Icon(Icons.chevron_right),
+                            label: Text('Next'),
+                          ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    OutlinedButton.icon(
-                      onPressed: showPreviousCard,
-                      icon: Icon(Icons.chevron_left),
-                      label: Text('Prev'),
-                    ),
-                    OutlinedButton.icon(
-                      onPressed: showNextCard,
-                      icon: Icon(Icons.chevron_right),
-                      label: Text('Next'),
-                    ),
-                  ],
-                ),
-                Text('$score'),
-                Text('data'),
-              ],
-            ),
-          ),
-        ),
+              ),
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             FloatingActionButton(
-              backgroundColor: Color(0xFFB76A185),
+              //backgroundColor: Color(0xFFB76A185),
               heroTag: 'Next Page Button',
               child: Icon(Icons.check),
               onPressed: () {
-                controller = _answerController.text.toString();
-                check = _journals[_currentIndex]['answer'] == controller;
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) => const ResultPage(),
+                //   ),
+                // );
 
-                if (check) {
-                  score++;
-                  MySharedPreferences.instance.setIntegerValue('score', score);
-                  MySharedPreferences.instance
-                      .setIntegerValue('counter', score);
-                  //MySharedPreferences.instance.setIntegerValue('score', score);
-                }
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ResultPage(),
-                  ),
-                );
+                showAlertDialog(context);
               },
             ),
           ],
@@ -257,7 +302,7 @@ class Countdown extends AnimatedWidget {
       "$timerText",
       style: TextStyle(
         fontSize: 20,
-        color: Theme.of(context).primaryColor,
+        color: Colors.red,
       ),
     );
   }

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'dart:math' as math;
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'sharedpreferences.dart';
 
@@ -58,11 +55,11 @@ class _IDState extends State<ID> {
       imagePath = 'assets/images/girl.png';
     }
     return Scaffold(
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('ID'),
+        title: Text('Profile'),
         centerTitle: true,
-        backgroundColor: Colors.grey[850],
+        backgroundColor: Color(0xFFB76A185),
         elevation: 0.0,
       ),
       body: Padding(
@@ -102,7 +99,7 @@ class _IDState extends State<ID> {
             Text(
               'Name',
               style: TextStyle(
-                color: Colors.grey,
+                //color: Colors.grey,
                 letterSpacing: 2.0,
               ),
             ),
@@ -110,7 +107,8 @@ class _IDState extends State<ID> {
             Text(
               name,
               style: TextStyle(
-                color: Colors.amberAccent[200],
+                //color: Colors.amberAccent[200],
+                color: Color(0xFFB76A185),
                 letterSpacing: 2.0,
                 fontSize: 28.0,
                 fontWeight: FontWeight.bold,
@@ -120,7 +118,7 @@ class _IDState extends State<ID> {
             Text(
               'Gender',
               style: TextStyle(
-                color: Colors.grey,
+                //color: Colors.grey,
                 letterSpacing: 2.0,
               ),
             ),
@@ -128,7 +126,8 @@ class _IDState extends State<ID> {
             Text(
               gender,
               style: TextStyle(
-                color: Colors.amberAccent[200],
+                //color: Colors.amberAccent[200],
+                color: Color(0xFFB76A185),
                 letterSpacing: 2.0,
                 fontSize: 28.0,
                 fontWeight: FontWeight.bold,
@@ -138,7 +137,7 @@ class _IDState extends State<ID> {
             Text(
               'RANK',
               style: TextStyle(
-                color: Colors.grey,
+                //color: Colors.grey,
                 letterSpacing: 2.0,
               ),
             ),
@@ -146,29 +145,30 @@ class _IDState extends State<ID> {
             Text(
               'Beginner',
               style: TextStyle(
-                color: Colors.amberAccent[200],
+                //color: Colors.amberAccent[200],
+                color: Color(0xFFB76A185),
                 letterSpacing: 2.0,
                 fontSize: 28.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 30.0),
-            Row(
-              children: <Widget>[
-                Icon(
-                  Icons.email,
-                  color: Colors.grey[400],
-                ),
-                Text(
-                  'kaimosalalima@gmail.com',
-                  style: TextStyle(
-                    color: Colors.grey[400],
-                    fontSize: 18.0,
-                    letterSpacing: 1.0,
-                  ),
-                ),
-              ],
-            ),
+            // SizedBox(height: 30.0),
+            // Row(
+            //   children: <Widget>[
+            //     Icon(
+            //       Icons.email,
+            //       color: Colors.grey[400],
+            //     ),
+            //     Text(
+            //       'kaimosalalima@gmail.com',
+            //       style: TextStyle(
+            //         //color: Colors.grey[400],
+            //         fontSize: 18.0,
+            //         letterSpacing: 1.0,
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),

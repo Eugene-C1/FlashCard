@@ -147,7 +147,7 @@ class _ResultPageState extends State<ResultPage> {
               MySharedPreferences.instance.setIntegerValue('points', points);
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => const MyHomePage(),
+                  builder: (context) => const ListPage(),
                 ),
               );
             },
