@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     left: 56,
                   ),
                   child: Text(
-                    'Name',
+                    'Flashcard',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 30,
