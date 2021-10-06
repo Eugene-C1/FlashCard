@@ -158,80 +158,89 @@ class _ListPageState extends State<ListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        Navigator.pushNamed(context, '/home');
-        return false;
-      },
-      child: MaterialApp(
-        home: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-                icon: Icon(Icons.arrow_back),
-                iconSize: 25.0,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/home');
-                }),
-            backgroundColor: Color(0xFFB76A185),
-            title: Text('Flashcard'),
-            centerTitle: true,
-            elevation: 0.0,
-          ),
-          body: _isLoading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : ListView.builder(
-                  itemCount: _journals.length,
-                  itemBuilder: (context, index) => Card(
-                    color: Colors.green[200],
-                    margin: EdgeInsets.all(15),
-                    child: ListTile(
-                      title: Text(_journals[index]['question']),
-                      subtitle: Text(_journals[index]['answer']),
-                      trailing: SizedBox(
-                        width: 100,
-                        child: Row(children: [
-                          IconButton(
-                            icon: Icon(Icons.edit),
-                            onPressed: () => _showForm(_journals[index]['id']),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.delete),
-                            onPressed: () =>
-                                _deleteItem(_journals[index]['id']),
-                          ),
-                        ]),
+    return Scaffold(
+      body: WillPopScope(
+        onWillPop: () async {
+          Navigator.pushNamed(context, '/home');
+          return false;
+        },
+        child: MaterialApp(
+          home: Scaffold(
+            appBar: AppBar(
+              leading: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  iconSize: 25.0,
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/home');
+                  }),
+              backgroundColor: Color(0xFFB76A185),
+              title: Text('Flashcard'),
+              centerTitle: true,
+              elevation: 0.0,
+            ),
+            body: _isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : ListView.builder(
+                    itemCount: _journals.length,
+                    itemBuilder: (context, index) => Card(
+                      color: Colors.green[200],
+                      margin: EdgeInsets.all(15),
+                      child: ListTile(
+                        title: Text(_journals[index]['question']),
+                        subtitle: Text(_journals[index]['answer']),
+                        trailing: SizedBox(
+                          width: 100,
+                          child: Row(children: [
+                            IconButton(
+                              icon: Icon(Icons.edit),
+                              onPressed: () =>
+                                  _showForm(_journals[index]['id']),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () =>
+                                  _deleteItem(_journals[index]['id']),
+                            ),
+                          ]),
+                        ),
                       ),
                     ),
                   ),
+            floatingActionButton: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                FloatingActionButton(
+                  backgroundColor: Color(0xFFB76A185),
+                  heroTag: 'Add Button',
+                  child: Icon(Icons.add),
+                  onPressed: () => _showForm(null),
                 ),
-          floatingActionButton: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              FloatingActionButton(
-                backgroundColor: Color(0xFFB76A185),
-                heroTag: 'Add Button',
-                child: Icon(Icons.add),
-                onPressed: () => _showForm(null),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              FloatingActionButton(
-                backgroundColor: Color(0xFFB76A185),
-                heroTag: 'Next Page Button',
-                child: Icon(Icons.check),
-                onPressed: () {
-                  if (_journals.isNotEmpty) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => new FlashCardPage()));
-                  }
-                },
-              ),
-            ],
+                SizedBox(
+                  height: 10,
+                ),
+                FloatingActionButton(
+                  backgroundColor: Color(0xFFB76A185),
+                  heroTag: 'Next Page Button',
+                  child: Icon(Icons.check),
+                  onPressed: () {
+                    if (_journals.isNotEmpty) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => new FlashCardPage()));
+                    } else {
+                      final snack = SnackBar(
+                        content: Text('Input at least 1 item'),
+                        duration: Duration(seconds: 2),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snack);
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

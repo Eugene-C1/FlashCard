@@ -59,7 +59,7 @@ class _ResultPageState extends State<ResultPage> {
     return WillPopScope(
       onWillPop: () async {
         final snack = SnackBar(
-          content: Text('Not Allowed to go back'),
+          content: Text('Not allowed to go back'),
           duration: Duration(seconds: 2),
         );
         ScaffoldMessenger.of(context).showSnackBar(snack);
@@ -138,6 +138,7 @@ class _ResultPageState extends State<ResultPage> {
             ),
           ),
           floatingActionButton: new FloatingActionButton(
+            backgroundColor: Colors.orange,
             heroTag: 'Next Page Button',
             child: Icon(Icons.check),
             onPressed: () {

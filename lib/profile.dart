@@ -55,11 +55,11 @@ class _IDState extends State<ID> {
       imagePath = 'assets/images/girl.png';
     }
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[900],
       appBar: AppBar(
         title: Text('Profile'),
         centerTitle: true,
-        backgroundColor: Color(0xFFB76A185),
+        backgroundColor: Colors.grey[850],
         elevation: 0.0,
       ),
       body: Padding(
@@ -99,7 +99,7 @@ class _IDState extends State<ID> {
             Text(
               'Name',
               style: TextStyle(
-                //color: Colors.grey,
+                color: Colors.grey,
                 letterSpacing: 2.0,
               ),
             ),
@@ -118,7 +118,7 @@ class _IDState extends State<ID> {
             Text(
               'Gender',
               style: TextStyle(
-                //color: Colors.grey,
+                color: Colors.grey,
                 letterSpacing: 2.0,
               ),
             ),
@@ -137,7 +137,7 @@ class _IDState extends State<ID> {
             Text(
               'RANK',
               style: TextStyle(
-                //color: Colors.grey,
+                color: Colors.grey,
                 letterSpacing: 2.0,
               ),
             ),

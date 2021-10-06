@@ -1,4 +1,5 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:after_layout/after_layout.dart';
@@ -18,6 +19,7 @@ class Splash extends StatelessWidget {
       child: AnimatedSplashScreen(
         backgroundColor: Colors.white,
         splash: 'assets/images/splashlogo.png',
+        splashIconSize: 200,
         //splashTransition: SplashTransition.fadeTransition,
         pageTransitionType: PageTransitionType.fade,
         duration: 3000,
@@ -43,7 +45,7 @@ class _CheckState extends State<Check> with AfterLayoutMixin<Check> {
       Navigator.of(context).pushReplacement(
         new MaterialPageRoute(
           builder: (context) => new StartupPage(title: 'Start Up'),
-          // NOTE: Changeback to HomePage!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          // NOTE: Changeback to MyHomePage() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         ),
       );
     } else {
