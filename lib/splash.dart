@@ -17,7 +17,7 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: AnimatedSplashScreen(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFB222629),
         splash: 'assets/images/splashlogo.png',
         splashIconSize: 200,
         //splashTransition: SplashTransition.fadeTransition,
@@ -44,7 +44,7 @@ class _CheckState extends State<Check> with AfterLayoutMixin<Check> {
     if (_seen) {
       Navigator.of(context).pushReplacement(
         new MaterialPageRoute(
-          builder: (context) => new StartupPage(title: 'Start Up'),
+          builder: (context) => MyHomePage(),
           // NOTE: Changeback to MyHomePage() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         ),
       );

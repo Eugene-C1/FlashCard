@@ -9,10 +9,19 @@ class ID extends StatefulWidget {
 }
 
 class _IDState extends State<ID> {
+  List ranks = [
+    'Beginner',
+    'Great',
+    'Expert',
+    'Veteran',
+    'Ultra',
+    'Master',
+  ];
   String name = '';
   String gender = '';
   int points = 0;
   int score = 0;
+  int rank = 0;
 
   @override
   void initState() {
@@ -40,6 +49,20 @@ class _IDState extends State<ID> {
         .then((value) => setState(() {
               points = value;
             }));
+
+    MySharedPreferences.instance
+        .getIntegerValue("rank")
+        .then((value) => setState(() {
+              rank = value;
+            }));
+  }
+
+  @override
+  void didChangeDependencies() {
+    precacheImage(AssetImage('assets/images/boy.png'), context);
+    precacheImage(AssetImage('assets/images/girl.png'), context);
+
+    super.didChangeDependencies();
   }
 
   @override
@@ -55,11 +78,11 @@ class _IDState extends State<ID> {
       imagePath = 'assets/images/girl.png';
     }
     return Scaffold(
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Color(0xFFB222629),
       appBar: AppBar(
         title: Text('Profile'),
         centerTitle: true,
-        backgroundColor: Colors.grey[850],
+        backgroundColor: Color(0xFFB2F3136),
         elevation: 0.0,
       ),
       body: Padding(
@@ -89,7 +112,7 @@ class _IDState extends State<ID> {
                   ),
                 ),
                 linearStrokeCap: LinearStrokeCap.roundAll,
-                progressColor: Colors.orange,
+                progressColor: Color(0xFFB7289DA),
               ),
             ),
             Divider(
@@ -108,7 +131,7 @@ class _IDState extends State<ID> {
               name,
               style: TextStyle(
                 //color: Colors.amberAccent[200],
-                color: Color(0xFFB76A185),
+                color: Color(0xFFBA69EBE),
                 letterSpacing: 2.0,
                 fontSize: 28.0,
                 fontWeight: FontWeight.bold,
@@ -127,7 +150,7 @@ class _IDState extends State<ID> {
               gender,
               style: TextStyle(
                 //color: Colors.amberAccent[200],
-                color: Color(0xFFB76A185),
+                color: Color(0xFFBA69EBE),
                 letterSpacing: 2.0,
                 fontSize: 28.0,
                 fontWeight: FontWeight.bold,
@@ -143,32 +166,15 @@ class _IDState extends State<ID> {
             ),
             SizedBox(height: 10.0),
             Text(
-              'Beginner',
+              ranks[rank],
               style: TextStyle(
                 //color: Colors.amberAccent[200],
-                color: Color(0xFFB76A185),
+                color: Color(0xFFBA69EBE),
                 letterSpacing: 2.0,
                 fontSize: 28.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            // SizedBox(height: 30.0),
-            // Row(
-            //   children: <Widget>[
-            //     Icon(
-            //       Icons.email,
-            //       color: Colors.grey[400],
-            //     ),
-            //     Text(
-            //       'kaimosalalima@gmail.com',
-            //       style: TextStyle(
-            //         //color: Colors.grey[400],
-            //         fontSize: 18.0,
-            //         letterSpacing: 1.0,
-            //       ),
-            //     ),
-            //   ],
-            // ),
           ],
         ),
       ),

@@ -6,6 +6,7 @@ import 'flashcard.dart';
 import 'flashcard_view.dart';
 import 'sql_helper.dart';
 import 'quizpage.dart';
+import 'main.dart';
 
 class FlashCardPage extends StatefulWidget {
   const FlashCardPage({Key? key}) : super(key: key);
@@ -41,78 +42,90 @@ class _FlashCardPageState extends State<FlashCardPage> {
   Widget build(BuildContext context) {
     int? count = _journals.length;
     int currentNumber = _currentIndex + 1;
-    return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.green),
-      home: Scaffold(
-        body: _isLoading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '$currentNumber / $count',
-                      style: TextStyle(
-                        color: Color(0xFFB76A185),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 250,
-                      height: 250,
-                      child: FlipCard(
-                        front: FlashcardView(
-                          text: _journals[_currentIndex]['question'],
-                        ),
-                        back: FlashcardView(
-                          text: _journals[_currentIndex]['answer'],
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacementNamed(context, '/listpage');
+        return false;
+      },
+      child: MaterialApp(
+        theme: ThemeData(
+          primarySwatch: MyColor.discordPurple,
+        ),
+        home: Scaffold(
+          backgroundColor: Color(0xFFB222629),
+          body: _isLoading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '$currentNumber / $count',
+                        style: TextStyle(
+                          color: Colors.white,
                         ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        OutlinedButton.icon(
-                            onPressed: showPreviousCard,
-                            icon: Icon(
-                              Icons.chevron_left,
-                              color: Color(0xFFB76A185),
-                            ),
-                            label: Text(
-                              'Prev',
-                              style: TextStyle(
-                                color: Color(0xFFB76A185),
+                      SizedBox(
+                        width: 250,
+                        height: 250,
+                        child: FlipCard(
+                          front: FlashcardView(
+                            text: _journals[_currentIndex]['question'],
+                          ),
+                          back: FlashcardView(
+                            text: _journals[_currentIndex]['answer'],
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          OutlinedButton.icon(
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                Color(0xFFB2F3136),
+                              )),
+                              onPressed: showPreviousCard,
+                              icon: Icon(
+                                Icons.chevron_left,
+                                color: Colors.white,
                               ),
-                            )),
-                        OutlinedButton.icon(
-                            onPressed: showNextCard,
-                            icon: Icon(
-                              Icons.chevron_right,
-                              color: Color(0xFFB76A185),
-                            ),
-                            label: Text(
-                              'Next',
-                              style: TextStyle(
-                                color: Color(0xFFB76A185),
+                              label: Text(
+                                'Prev',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              )),
+                          OutlinedButton.icon(
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                Color(0xFFB2F3136),
+                              )),
+                              onPressed: showNextCard,
+                              icon: Icon(
+                                Icons.chevron_right,
+                                color: Colors.white,
                               ),
-                            )),
-                      ],
-                    ),
-                  ],
+                              label: Text(
+                                'Next',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              )),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-        floatingActionButton: FloatingActionButton(
-          heroTag: 'Next Page Button',
-          child: Icon(Icons.check),
-          backgroundColor: Color(0xFFB76A185),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const QuizPage(title: 'Quiz'),
-              ),
-            );
-          },
+          floatingActionButton: FloatingActionButton(
+            heroTag: 'Next Page Button',
+            child: Icon(Icons.check),
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/quizpage');
+            },
+          ),
         ),
       ),
     );

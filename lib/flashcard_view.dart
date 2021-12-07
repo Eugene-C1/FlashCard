@@ -9,10 +9,16 @@ class FlashcardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
-      child: Center(
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color(0xFFB2F3136),
+        ),
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );

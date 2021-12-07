@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quiver/async.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'main.dart';
 import 'flashcard_view.dart';
 import 'resultpage.dart';
 import 'sql_helper.dart';
@@ -73,13 +74,13 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
   showAlertDialog(BuildContext context) {
     // set up the buttons
     Widget cancelButton = TextButton(
-      child: Text("Cancel"),
+      child: Text("Cancel", style: TextStyle(color: MyColor.discordPurple)),
       onPressed: () {
         Navigator.of(context).pop();
       },
     );
     Widget continueButton = TextButton(
-      child: Text("Continue"),
+      child: Text("Continue", style: TextStyle(color: MyColor.discordPurple)),
       onPressed: () {
         controller = _answerController.text.toString();
         check = _journals[_currentIndex]['answer'] == controller;
@@ -89,18 +90,16 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
           MySharedPreferences.instance.setIntegerValue('score', score);
           MySharedPreferences.instance.setIntegerValue('counter', score);
         }
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const ResultPage(),
-          ),
-        );
+        Navigator.pushReplacementNamed(context, '/resultpage');
       },
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Alert"),
-      content: Text("Would you like to submit your answer?"),
+      backgroundColor: Color(0xFFB2F3136),
+      title: Text("Alert", style: TextStyle(color: Colors.white)),
+      content: Text("Would you like to submit your answer?",
+          style: TextStyle(color: Colors.white)),
       actions: [
         cancelButton,
         continueButton,
@@ -123,114 +122,149 @@ class _QuizPageState extends State<QuizPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     int? count = _journals.length;
     int currentNumber = _currentIndex + 1;
-    return Material(
-      child: Scaffold(
-        body: _isLoading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Row(
-                        //mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            '$currentNumber / $count',
-                            style: TextStyle(color: Colors.blue),
-                          ),
-                          Countdown(
-                            animation: StepTween(
-                              begin:
-                                  levelClock, // THIS IS A USER ENTERED NUMBER
-                              end: 0,
-                            ).animate(_controller),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 250,
-                        height: 250,
-                        child: FlipCard(
-                          front: FlashcardView(
-                            text: _journals[_currentIndex]['question'],
-                          ),
-                          back: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(4.0),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 1,
-                                  blurRadius: 2,
-                                  offset: Offset(
-                                      0.0, 2), // changes position of shadow
-                                ),
-                              ],
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushReplacementNamed(context, '/flashcardpage');
+        return false;
+      },
+      child: MaterialApp(
+        theme: ThemeData(
+          primarySwatch: MyColor.discordPurple,
+        ),
+        home: Scaffold(
+          backgroundColor: Color(0xFFB222629),
+          body: _isLoading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Center(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Row(
+                          //mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              '$currentNumber / $count',
+                              style: TextStyle(color: Colors.white),
                             ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.symmetric(horizontal: 30),
-                                  child: TextField(
-                                    controller: _answerController,
-                                    decoration: InputDecoration(
-                                      hintText: 'Enter Answer',
-                                      labelStyle:
-                                          TextStyle(color: Colors.white),
-                                      border: OutlineInputBorder(),
-                                    ),
+                            Countdown(
+                              animation: StepTween(
+                                begin:
+                                    levelClock, // THIS IS A USER ENTERED NUMBER
+                                end: 0,
+                              ).animate(_controller),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 250,
+                          height: 250,
+                          child: FlipCard(
+                            front: FlashcardView(
+                              text: _journals[_currentIndex]['question'],
+                            ),
+                            back: Container(
+                              decoration: BoxDecoration(
+                                color: Color(0xFFB2F3136),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(4.0),
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.white.withOpacity(0.4),
+                                    spreadRadius: .1,
+                                    blurRadius: .1,
+                                    offset: Offset(
+                                        0.0, 0), // changes position of shadow
                                   ),
-                                )
-                              ],
+                                ],
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 30),
+                                    child: TextField(
+                                      controller: _answerController,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                      decoration: InputDecoration(
+                                        hintText: 'Enter Answer',
+                                        hintStyle:
+                                            TextStyle(color: Colors.white),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: Color(0xFFBA69EBE)),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: Color(0xFFBA69EBE)),
+                                        ),
+                                        filled: true,
+                                        fillColor: Color(0xFFB36393F),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          OutlinedButton.icon(
-                            onPressed: showPreviousCard,
-                            icon: Icon(Icons.chevron_left),
-                            label: Text('Prev'),
-                          ),
-                          OutlinedButton.icon(
-                            onPressed: showNextCard,
-                            icon: Icon(Icons.chevron_right),
-                            label: Text('Next'),
-                          ),
-                        ],
-                      ),
-                    ],
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            OutlinedButton.icon(
+                              onPressed: showPreviousCard,
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                Color(0xFFB2F3136),
+                              )),
+                              icon:
+                                  Icon(Icons.chevron_left, color: Colors.white),
+                              label: Text('Prev',
+                                  style: TextStyle(color: Colors.white)),
+                            ),
+                            OutlinedButton.icon(
+                              onPressed: showNextCard,
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                Color(0xFFB2F3136),
+                              )),
+                              icon: Icon(Icons.chevron_right,
+                                  color: Colors.white),
+                              label: Text('Next',
+                                  style: TextStyle(color: Colors.white)),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-        floatingActionButton: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            FloatingActionButton(
-              //backgroundColor: Color(0xFFB76A185),
-              heroTag: 'Next Page Button',
-              child: Icon(Icons.check),
-              onPressed: () {
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (context) => const ResultPage(),
-                //   ),
-                // );
+          floatingActionButton: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton(
+                //backgroundColor: Color(0xFFB76A185),
+                heroTag: 'Next Page Button',
+                child: Icon(Icons.check),
+                onPressed: () {
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const ResultPage(),
+                  //   ),
+                  // );
 
-                showAlertDialog(context);
-              },
-            ),
-          ],
+                  showAlertDialog(context);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
